@@ -14,3 +14,11 @@ class Bookmark(models.Model)
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
+
+    class Meta:
+        verbose_name = 'tag'
+        verbose_name_pluarl = 'tags'
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
