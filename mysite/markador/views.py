@@ -9,7 +9,7 @@ def bookmark_user(request, username):
 
 
 def bookmark_list(request):
-    bookmarks = Bookmark.public.all()
+    bookmarks = Bookmark.is_public
     context = {'bookmarks': bookmarks}
     return render(request, 'marcador/bookmark_list.html', context)
 

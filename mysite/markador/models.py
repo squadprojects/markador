@@ -18,7 +18,7 @@ class Bookmark(models.Model):
     url = models.URLField()
     title = models.CharField(max_length=200)
     description = models.TextField()
-    is_public = models.BooleanField()
+    is_public = models.BooleanField('public', default=True)
     date_created = models.DateTimeField('date created', auto_now_add=True,)
     date_updated = models.DateTimeField('date updated', null=True,auto_now_add=True)
     owner = models.ForeignKey(User, related_name='bookmarks')
