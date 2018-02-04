@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 
@@ -5,8 +6,13 @@ from .models import Bookmark
 
 
 def bookmark_user(request, username):
-    return HttpResponse("You're looking at the view for user %s" % username)
-
+    user = get_object_or_404(User, username=username)
+    if request.user == user:
+        bookmarks = user.bookmarks.all()
+    else:
+        bookmarks = Bookmark.public.filter(owner__username=username)
+    context = {'bookmarks': bookmarks, 'owner': user}
+    return render(request, 'markador/bookmark_user.html', context)
 
 def bookmark_list(request):
     bookmarks = Bookmark.public.all()
