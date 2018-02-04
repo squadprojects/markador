@@ -5,6 +5,8 @@
     <title>Markador - {% block title %}{% endblock %}</title>
   </head>
   <body>
-    {% block content %}{% endblock %}
+    {% block content %}
+      {% include "toggle_login.html" %}
+    {% endblock %}
   </body>
 </html>
