@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 
 class Tag(models.Model):
@@ -14,15 +15,24 @@ class Tag(models.Model):
         return self.name
 
 
+class PublicBookmarkManager(models.Manager):
+    def get_queryset(self):
+        qs = super(PublicBookmarkManager, self).get_queryset()
+        return qs.filter(is_public=True)
+
+
 class Bookmark(models.Model):
     url = models.URLField()
-    title = models.CharField(max_length=200)
-    description = models.TextField()
+    title = models.CharField('title', max_length=200)
+    description = models.TextField('description', blank=True)
     is_public = models.BooleanField('public', default=True)
     date_created = models.DateTimeField('date created', auto_now_add=True,)
     date_updated = models.DateTimeField('date updated', null=True,auto_now_add=True)
-    owner = models.ForeignKey(User, related_name='bookmarks')
+    owner = models.ForeignKey(User, verbose_name='owner', related_name='bookmarks')
     tags = models.ManyToManyField(Tag, blank=True)
+
+    objects = models.Manager()
+    public = PublicBookmarkManager()
 
     class Meta:
         verbose_name = 'bookmark'
@@ -31,3 +41,9 @@ class Bookmark(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.date_created = now()
+        self.date_updated = now()
+        super(Bookmark, self).save(*args, **kwargs)
