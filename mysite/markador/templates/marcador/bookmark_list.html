@@ -5,7 +5,7 @@
 {% block content %}
   <ul>
   {% for bookmark in bookmarks %}
-    <li>{{ bookmark.title }}</li>
+    <li>{% include "markador/bookmark.html" }}</li>
   {% empty %}
     <li>No bookmarks</li>
   {% endfor %}
