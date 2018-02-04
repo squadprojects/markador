@@ -11,7 +11,7 @@ def bookmark_user(request, username):
 def bookmark_list(request):
     bookmarks = Bookmark.public.all()
     context = {'bookmarks': bookmarks}
-    return render(request, 'marcador/bookmark_list.html', context)
+    return render(request, 'markador/bookmark_list.html', context)
 
 
 def detail(request, bookmark_id):

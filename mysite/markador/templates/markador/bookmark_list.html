@@ -1,11 +1,11 @@
-{% extends "marcador/base.html" %}
+{% extends "markador/base.html" %}
 
 {% block title %}Latest bookamrks{% endblock %}
 
 {% block content %}
   <ul>
   {% for bookmark in bookmarks %}
-    <li>{% include "markador/bookmark.html" }}</li>
+    <li>{% include "markador/bookmark.html" %}</li>
   {% empty %}
     <li>No bookmarks</li>
   {% endfor %}
